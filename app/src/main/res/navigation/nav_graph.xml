@@ -9,5 +9,14 @@
         android:id="@+id/fragmentShoppingList"
         android:name="com.example.shopinglisttesting.ui.shopping_list.FragmentShoppingList"
         android:label="Shopping List"
-        tools:layout="@layout/fragment_shoping_list" />
+        tools:layout="@layout/fragment_shoping_list" >
+        <action
+            android:id="@+id/action_fragmentShoppingList_to_fragmentGallery"
+            app:destination="@id/fragmentGallery" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentGallery"
+        android:name="com.example.shopinglisttesting.ui.fragment_gallery.FragmentGallery"
+        android:label="Image Gallery"
+        tools:layout="@layout/fragment_gallery" />
 </navigation>
