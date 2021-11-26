@@ -1,5 +1,3 @@
-@file:Suppress("SpellCheckingInspection")
-
 package com.example.shopinglisttesting.ui.fragment_gallery
 
 

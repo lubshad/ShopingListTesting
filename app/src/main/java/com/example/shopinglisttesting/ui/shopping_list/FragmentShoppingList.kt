@@ -16,7 +16,7 @@ class FragmentShoppingList: Fragment(R.layout.fragment_shoping_list) {
 
         binding.apply {
             fabAddItem.setOnClickListener {
-                val action = FragmentShoppingListDirections.actionFragmentShoppingListToFragmentGallery()
+                val action = FragmentShoppingListDirections.actionFragmentShoppingListToFragmentAddItem()
                 findNavController().navigate(action)
             }
         }
