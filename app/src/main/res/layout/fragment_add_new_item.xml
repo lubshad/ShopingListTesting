@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    tools:context=".ui.fragment_add_item.FragmentAddItem"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_view_item"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+
+        <EditText
+            android:id="@+id/edit_text_item_name"
+            android:layout_margin="10dp"
+            android:hint="Item Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_text_quantity"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:hint="Quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/edit_text_cost"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:hint="Cost Per Item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_add_item"
+        android:layout_margin="10dp"
+        android:text="Add Item"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
