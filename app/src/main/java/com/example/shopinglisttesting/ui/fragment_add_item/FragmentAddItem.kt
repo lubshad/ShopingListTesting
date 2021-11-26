@@ -1,6 +1,8 @@
 package com.example.shopinglisttesting.ui.fragment_add_item
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,24 +29,75 @@ class FragmentAddItem : Fragment(R.layout.fragment_add_new_item) {
                 findNavController().navigate(action)
             }
 
-            editTextItemName.addTextChangedListener {
-                value ->
-                viewModel.itemName.value = value.toString()
-            }
+            editTextItemName.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
 
-            editTextQuantity.addTextChangedListener {
-                value ->
-                if (value.text != null) {
-                    viewModel.quantity.value = value.toString().toInt()
                 }
-            }
 
-            editTextCost.addTextChangedListener {
-                value ->
-                if (value.text  != null ) {
-                    viewModel.costPerItem.value = value.toString().toInt()
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
                 }
-            }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!s.isNullOrEmpty()) {
+
+                        viewModel.itemName.value = s.toString()
+                    } else {
+                        viewModel.itemName.value = null
+                    }
+                }
+
+            })
+
+            editTextQuantity.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!s.isNullOrEmpty()) {
+                        viewModel.quantity.value = s.toString().toInt()
+                    } else {
+                        viewModel.quantity.value = null
+                    }
+                }
+
+            })
+
+            editTextCost.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (!s.isNullOrEmpty()) {
+                        viewModel.costPerItem.value = s.toString().toInt()
+                    } else {
+                        viewModel.costPerItem.value = null
+                    }
+                }
+
+            })
 
             buttonAddItem.setOnClickListener {
                 viewModel.addNewItem()

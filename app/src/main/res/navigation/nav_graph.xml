@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/fragmentAddItem"
         android:name="com.example.shopinglisttesting.ui.fragment_add_item.FragmentAddItem"
-        android:label="fragment_add_new_item"
+        android:label="Add New Item"
         tools:layout="@layout/fragment_add_new_item" >
         <action
             android:id="@+id/action_fragmentAddItem_to_fragmentGallery"

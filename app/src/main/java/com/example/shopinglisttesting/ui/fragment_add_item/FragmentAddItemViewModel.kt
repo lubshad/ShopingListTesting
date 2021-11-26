@@ -17,9 +17,9 @@ class FragmentAddItemViewModel @Inject constructor(): ViewModel() {
 
     fun addNewItem() {
 
-        Log.i(TAG, itemName.value!!)
-        Log.i(TAG, quantity.value!!.toString())
-        Log.i(TAG, costPerItem.value!!.toString())
+        Log.i(TAG, itemName.value.toString())
+        Log.i(TAG, quantity.value.toString())
+        Log.i(TAG, costPerItem.value.toString())
     }
 
 
