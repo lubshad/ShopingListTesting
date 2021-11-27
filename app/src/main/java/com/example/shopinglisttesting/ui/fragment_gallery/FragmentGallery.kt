@@ -6,18 +6,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.example.shopinglisttesting.R
 import com.example.shopinglisttesting.databinding.FragmentGalleryBinding
+import com.example.shopinglisttesting.ui.fragment_add_item.ITEM_IMAGE_URL
 import com.example.shopinglisttesting.utils.onQuerySubmit
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class FragmentGallery : Fragment(R.layout.fragment_gallery) {
+class FragmentGallery : Fragment(R.layout.fragment_gallery), PixabayImageAdapter.OnClickListener {
     private val viewModel by viewModels<FragmentGalleryViewModel>()
 
 
@@ -28,7 +32,7 @@ class FragmentGallery : Fragment(R.layout.fragment_gallery) {
 
 
         binding = FragmentGalleryBinding.bind(view)
-        val pixabayImageAdapter = PixabayImageAdapter()
+        val pixabayImageAdapter = PixabayImageAdapter(this)
 
         binding.apply {
             recyclerViewGallery.adapter = pixabayImageAdapter
@@ -74,6 +78,12 @@ class FragmentGallery : Fragment(R.layout.fragment_gallery) {
             binding
                 .recyclerViewGallery.scrollToPosition(0)
         }
+    }
+
+    override fun onItemClicked(imageUrl: String) {
+        val bundle = bundleOf(ITEM_IMAGE_URL to imageUrl)
+        setFragmentResult(ITEM_IMAGE_URL, bundle)
+        findNavController().navigateUp()
     }
 }
 

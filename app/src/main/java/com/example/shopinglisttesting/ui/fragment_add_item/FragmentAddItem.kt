@@ -1,21 +1,29 @@
 package com.example.shopinglisttesting.ui.fragment_add_item
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.shopinglisttesting.R
 import com.example.shopinglisttesting.databinding.FragmentAddNewItemBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+
+
+const val ITEM_IMAGE_URL = "item_image_url"
 
 
 @AndroidEntryPoint
 class FragmentAddItem : Fragment(R.layout.fragment_add_new_item) {
 
-    val viewModel by viewModels<FragmentAddItemViewModel>()
+    private val viewModel by viewModels<FragmentAddItemViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,81 +37,65 @@ class FragmentAddItem : Fragment(R.layout.fragment_add_new_item) {
                 findNavController().navigate(action)
             }
 
-            editTextItemName.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
 
+            editTextItemName.addTextChangedListener {
+                if (!it.isNullOrEmpty()) {
+
+                    viewModel.itemName.value = it.toString()
+                } else {
+                    viewModel.itemName.value = null
                 }
+            }
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int,
-                ) {
+            editTextQuantity.addTextChangedListener {
+                if (!it.isNullOrEmpty()) {
+                    viewModel.quantity.value = it.toString().toInt()
+                } else {
+                    viewModel.quantity.value = null
                 }
+            }
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!s.isNullOrEmpty()) {
-
-                        viewModel.itemName.value = s.toString()
-                    } else {
-                        viewModel.itemName.value = null
-                    }
+            editTextCost.addTextChangedListener {
+                if (!it.isNullOrEmpty()) {
+                    viewModel.costPerItem.value = it.toString().toInt()
+                } else {
+                    viewModel.costPerItem.value = null
                 }
-
-            })
-
-            editTextQuantity.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int,
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!s.isNullOrEmpty()) {
-                        viewModel.quantity.value = s.toString().toInt()
-                    } else {
-                        viewModel.quantity.value = null
-                    }
-                }
-
-            })
-
-            editTextCost.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int,
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (!s.isNullOrEmpty()) {
-                        viewModel.costPerItem.value = s.toString().toInt()
-                    } else {
-                        viewModel.costPerItem.value = null
-                    }
-                }
-
-            })
+            }
 
             buttonAddItem.setOnClickListener {
                 viewModel.addNewItem()
             }
 
         }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.addItemEventFlow.collect {
+                when (it) {
+                    is AddItemEvents.ShowInvalidInputMessage -> {
+                        showToast(it.message)
+                    }
+                }
+            }
+
+        }
+        viewModel.itemImage.observe(viewLifecycleOwner) {
+            if (it != null) {
+                Glide.with(view)
+                    .load(it).transition(DrawableTransitionOptions.withCrossFade())
+                    .centerCrop()
+                    .into(binding.imageViewItem)
+            }
+        }
+
+        setFragmentResultListener(ITEM_IMAGE_URL) { _, bundle ->
+            val result = bundle.getString(ITEM_IMAGE_URL)
+            viewModel.itemImage.value = result
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
 }

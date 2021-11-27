@@ -11,15 +11,29 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.shopinglisttesting.data.model.pixabay.Hit
 import com.example.shopinglisttesting.databinding.PixabayImageItemBinding
-import com.example.shopinglisttesting.ui.fragment_gallery.PixabayImageAdapter.*
+import com.example.shopinglisttesting.ui.fragment_gallery.PixabayImageAdapter.PixabayImageViewHolder
 
 
-class PixabayImageAdapter :
+class PixabayImageAdapter(val onItemClick: OnClickListener) :
     PagingDataAdapter<Hit, PixabayImageViewHolder>(PixabayDiffCallBack) {
 
 
     inner class PixabayImageViewHolder(private val binding: PixabayImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.imageViewItem.setOnClickListener{
+
+            val position = bindingAdapterPosition
+                val item = getItem(position)
+                if (item != null) {
+                    val imageUrl = item.webformatURL
+                    onItemClick.onItemClicked(imageUrl)
+                }
+            }
+        }
+
+
         fun bind(item: Hit) {
             binding.apply {
                 Glide.with(itemView)
@@ -49,6 +63,10 @@ class PixabayImageAdapter :
                 holder.bind(item)
             }
         }
+    }
+
+    interface OnClickListener {
+        fun onItemClicked(imageUrl: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PixabayImageViewHolder {
