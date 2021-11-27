@@ -1,7 +1,9 @@
 package com.example.shopinglisttesting.ui.fragment_gallery
 
 
-import androidx.lifecycle.*
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import com.example.shopinglisttesting.domain.pixabay_api.PixabayRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -10,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FragmentGalleryViewModel @Inject constructor(
     private val pixabayRepository: PixabayRepository,
-    state: SavedStateHandle
+    state: SavedStateHandle,
 ) : ViewModel() {
 
     companion object {

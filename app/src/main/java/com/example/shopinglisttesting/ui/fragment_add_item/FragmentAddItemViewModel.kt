@@ -41,7 +41,10 @@ class FragmentAddItemViewModel @Inject constructor() : ViewModel() {
                     addItemEventChannel.send(AddItemEvents.ShowInvalidInputMessage(message = "Please add an item image"))
                 }
                 else -> {
-                    val newItem = ShoppingItem(itemName.value!!, quantity.value!!, costPerItem.value!!, itemImage.value!!)
+                    val newItem = ShoppingItem(itemName.value!!,
+                        quantity.value!!,
+                        costPerItem.value!!,
+                        itemImage.value!!)
                     Log.i(TAG, newItem.toString())
                 }
             }

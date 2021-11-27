@@ -23,7 +23,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String" , "PIXABAY_KEY", localProperties["pixabay_key"])
+        buildConfigField("String", "PIXABAY_KEY", localProperties["pixabay_key"])
     }
 
     buildTypes {
@@ -41,7 +41,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding=true
+        viewBinding = true
     }
 }
 

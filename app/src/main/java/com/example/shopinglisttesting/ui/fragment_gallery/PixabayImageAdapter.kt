@@ -22,9 +22,9 @@ class PixabayImageAdapter(val onItemClick: OnClickListener) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.imageViewItem.setOnClickListener{
+            binding.imageViewItem.setOnClickListener {
 
-            val position = bindingAdapterPosition
+                val position = bindingAdapterPosition
                 val item = getItem(position)
                 if (item != null) {
                     val imageUrl = item.webformatURL
@@ -70,7 +70,8 @@ class PixabayImageAdapter(val onItemClick: OnClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PixabayImageViewHolder {
-        val binding = PixabayImageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            PixabayImageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PixabayImageViewHolder(binding)
     }
 
