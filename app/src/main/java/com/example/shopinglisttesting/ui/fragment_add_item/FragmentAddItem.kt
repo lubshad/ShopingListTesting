@@ -3,8 +3,10 @@ package com.example.shopinglisttesting.ui.fragment_add_item
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +15,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.shopinglisttesting.R
 import com.example.shopinglisttesting.databinding.FragmentAddNewItemBinding
+import com.example.shopinglisttesting.ui.fragment_add_item.AddItemEvents.*
+import com.example.shopinglisttesting.ui.shopping_list.ADDED_ITEM_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -72,8 +76,11 @@ class FragmentAddItem : Fragment(R.layout.fragment_add_new_item) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.addItemEventFlow.collect {
                 when (it) {
-                    is AddItemEvents.ShowInvalidInputMessage -> {
+                    is ShowInvalidInputMessage -> {
                         showToast(it.message)
+                    }
+                    is NavigateBackWithItemName -> {
+                        navigateBackWithItemName(it.itemName)
                     }
                 }
             }
@@ -94,8 +101,17 @@ class FragmentAddItem : Fragment(R.layout.fragment_add_new_item) {
         }
     }
 
+    private fun navigateBackWithItemName(itemName: String) {
+        val bundle = bundleOf(ADDED_ITEM_NAME to itemName)
+        setFragmentResult(ADDED_ITEM_NAME, bundle)
+        findNavController().navigateUp()
+    }
+
     private fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
+
+
+
 
 }

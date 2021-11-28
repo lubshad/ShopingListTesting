@@ -11,4 +11,5 @@ class FragmentShoppingListViewModel @Inject constructor(
     private val shoppingItemDao: ShoppingItemDao
 ): ViewModel() {
     val shoppingItems = shoppingItemDao.observeAllItems()
+    val itemTotal = shoppingItemDao.observeTotal()
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopinglisttesting.data.model.shopping_item.ShoppingItem
 import com.example.shopinglisttesting.data.repository.shopping_item.ShoppingItemDao
+import com.example.shopinglisttesting.ui.fragment_add_item.AddItemEvents.NavigateBackWithItemName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -50,6 +51,9 @@ class FragmentAddItemViewModel @Inject constructor(
                         itemImage.value!!)
                     viewModelScope.launch {
                         shoppingItemDao.addNewItem(newItem)
+                        addItemEventChannel.send(
+                            NavigateBackWithItemName(newItem.itemName)
+                        )
                     }
                 }
             }
@@ -70,4 +74,5 @@ class FragmentAddItemViewModel @Inject constructor(
 
 sealed class AddItemEvents {
     data class ShowInvalidInputMessage(val message: String) : AddItemEvents()
+    data class NavigateBackWithItemName(val itemName:String) : AddItemEvents()
 }
