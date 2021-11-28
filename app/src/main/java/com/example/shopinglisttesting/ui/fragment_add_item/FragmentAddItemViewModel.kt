@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopinglisttesting.data.model.shopping_item.ShoppingItem
+import com.example.shopinglisttesting.data.repository.shopping_item.ShoppingItemDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -13,7 +14,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class FragmentAddItemViewModel @Inject constructor() : ViewModel() {
+class FragmentAddItemViewModel @Inject constructor(
+    private val shoppingItemDao: ShoppingItemDao
+) : ViewModel() {
 
 
     companion object {
@@ -45,7 +48,9 @@ class FragmentAddItemViewModel @Inject constructor() : ViewModel() {
                         quantity.value!!,
                         costPerItem.value!!,
                         itemImage.value!!)
-                    Log.i(TAG, newItem.toString())
+                    viewModelScope.launch {
+                        shoppingItemDao.addNewItem(newItem)
+                    }
                 }
             }
         }

@@ -78,6 +78,11 @@ dependencies {
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt("com.github.bumptech.glide:compiler:$glide_version")
+
+
+    //Room Database
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 }
 
 kapt {
