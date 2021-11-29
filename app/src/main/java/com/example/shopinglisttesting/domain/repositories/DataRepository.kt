@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import com.example.shopinglisttesting.data.model.pixabay.PixabayResponse
 import com.example.shopinglisttesting.data.model.shopping_item.ShoppingItem
 import com.example.shopinglisttesting.utils.Resource
+import javax.inject.Singleton
+
+
 
 interface DataRepository {
     suspend fun addNewItemToShoppingList(item: ShoppingItem)
@@ -13,6 +16,4 @@ interface DataRepository {
     fun observeAllShoppingItems(): LiveData<List<ShoppingItem>>
 
     fun observeTotal(): LiveData<Int>
-
-    suspend fun searchForImages(query: String): Resource<PixabayResponse>
 }

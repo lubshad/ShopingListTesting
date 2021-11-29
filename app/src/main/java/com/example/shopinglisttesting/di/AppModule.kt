@@ -3,9 +3,11 @@ package com.example.shopinglisttesting.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.shopinglisttesting.data.repository.shopping_item.DataRepositoryImpl
 import com.example.shopinglisttesting.data.repository.shopping_item.ShoppingDatabase
 import com.example.shopinglisttesting.data.repository.shopping_item.ShoppingItemDao
 import com.example.shopinglisttesting.domain.pixabay_api.PixabayApi
+import com.example.shopinglisttesting.domain.repositories.DataRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +48,9 @@ object AppModule {
     @Singleton
     fun providesPixabayApiInterface(pixabayRetrofit: Retrofit): PixabayApi =
         pixabayRetrofit.create(PixabayApi::class.java)
+
+
+    @Provides
+    @Singleton
+    fun provideDataRepository(shoppingItemDao:ShoppingItemDao) = DataRepositoryImpl(shoppingItemDao) as DataRepository
 }

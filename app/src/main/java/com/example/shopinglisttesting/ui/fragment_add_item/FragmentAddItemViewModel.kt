@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shopinglisttesting.data.model.shopping_item.ShoppingItem
 import com.example.shopinglisttesting.data.repository.shopping_item.ShoppingItemDao
+import com.example.shopinglisttesting.domain.repositories.DataRepository
 import com.example.shopinglisttesting.ui.fragment_add_item.AddItemEvents.NavigateBackWithItemName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FragmentAddItemViewModel @Inject constructor(
-    private val shoppingItemDao: ShoppingItemDao
+    private val dataRepository: DataRepository
 ) : ViewModel() {
 
 
@@ -31,7 +32,7 @@ class FragmentAddItemViewModel @Inject constructor(
     fun addNewItem() {
         viewModelScope.launch {
             when {
-                itemName.value == null -> {
+                itemName.value.isNullOrEmpty() -> {
                     addItemEventChannel.send(AddItemEvents.ShowInvalidInputMessage(message = "Item name cant be empty"))
                 }
                 quantity.value == null -> {
@@ -41,7 +42,7 @@ class FragmentAddItemViewModel @Inject constructor(
                 costPerItem.value == null -> {
                     addItemEventChannel.send(AddItemEvents.ShowInvalidInputMessage(message = "Cost per item cant be empty"))
                 }
-                itemImage.value == null -> {
+                itemImage.value.isNullOrEmpty() -> {
                     addItemEventChannel.send(AddItemEvents.ShowInvalidInputMessage(message = "Please add an item image"))
                 }
                 else -> {
@@ -50,7 +51,7 @@ class FragmentAddItemViewModel @Inject constructor(
                         costPerItem.value!!,
                         itemImage.value!!)
                     viewModelScope.launch {
-                        shoppingItemDao.addNewItem(newItem)
+                        dataRepository.addNewItemToShoppingList(newItem)
                         addItemEventChannel.send(
                             NavigateBackWithItemName(newItem.itemName)
                         )

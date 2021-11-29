@@ -17,7 +17,7 @@ class FakeRepositoryImpl : DataRepository {
     private val totalLiveData = MutableLiveData<Int>()
 
 
-    fun refreshData() {
+    private fun refreshData() {
         shoppingListLiveData.postValue(shoppingDatabase)
         totalLiveData.postValue(getTotal())
     }
@@ -45,15 +45,6 @@ class FakeRepositoryImpl : DataRepository {
 
     override fun observeTotal(): LiveData<Int> {
         return totalLiveData
-    }
-
-    override suspend fun searchForImages(query: String): Resource<PixabayResponse> {
-        return try {
-            val data = PixabayResponse(hits = listOf<Hit>(), 0, 0)
-            Resource.Success(data)
-        } catch (e: Exception) {
-            Resource.Error(error = "Unexpected Errror")
-        }
     }
 
 }

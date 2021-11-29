@@ -7,10 +7,12 @@ import com.example.shopinglisttesting.domain.pixabay_api.PixabayApi
 import com.example.shopinglisttesting.domain.repositories.DataRepository
 import com.example.shopinglisttesting.utils.Resource
 import javax.inject.Inject
+import javax.inject.Singleton
+
+
 
 class DataRepositoryImpl @Inject constructor(
-    private val shoppingItemDao: ShoppingItemDao,
-    private val pixabayApi: PixabayApi
+    private val shoppingItemDao: ShoppingItemDao
 ): DataRepository {
     override suspend fun addNewItemToShoppingList(item: ShoppingItem) {
         shoppingItemDao.addNewItem(item)
@@ -26,14 +28,5 @@ class DataRepositoryImpl @Inject constructor(
 
     override fun observeTotal(): LiveData<Int> {
         return shoppingItemDao.observeTotal()
-    }
-
-    override suspend fun searchForImages(query: String): Resource<PixabayResponse> {
-        return try {
-            val data = pixabayApi.searchPhoto(query, page = 1, perPage = 10)
-            Resource.Success(data)
-        } catch (e:Exception) {
-            Resource.Error(error = "Unexpected Error Occurred")
-        }
     }
 }

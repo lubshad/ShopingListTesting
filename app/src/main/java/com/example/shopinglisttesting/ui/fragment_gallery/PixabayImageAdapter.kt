@@ -56,7 +56,6 @@ class PixabayImageAdapter(val onItemClick: OnClickListener) :
     }
 
     override fun onBindViewHolder(holder: PixabayImageViewHolder, position: Int) {
-        val position = holder.bindingAdapterPosition
         if (position != RecyclerView.NO_POSITION) {
             val item = getItem(position)
             if (item != null) {
