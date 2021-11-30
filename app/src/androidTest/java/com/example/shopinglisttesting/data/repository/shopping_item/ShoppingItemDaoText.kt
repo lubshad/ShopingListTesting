@@ -1,42 +1,42 @@
 package com.example.shopinglisttesting.data.repository.shopping_item
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
 import com.example.shopinglisttesting.data.model.shopping_item.ShoppingItem
 import com.example.shopinglisttesting.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
+import javax.inject.Inject
+import javax.inject.Named
 
 
 @ExperimentalCoroutinesApi
-@SmallTest
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class ShoppingItemDaoText {
+
+
+    @get:Rule
+    var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-
-    private lateinit var shoppingDatabase: ShoppingDatabase
+    @Inject
+    @Named("test_db")
+    lateinit var shoppingDatabase: ShoppingDatabase
     private lateinit var shoppingDao: ShoppingItemDao
 
 
     @Before
     fun setup() {
-        shoppingDatabase = Room.inMemoryDatabaseBuilder(getApplicationContext(),
-            ShoppingDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
+        hiltRule.inject()
         shoppingDao = shoppingDatabase.shoppingDao()
     }
 
@@ -75,7 +75,7 @@ class ShoppingItemDaoText {
         shoppingDao.addNewItem(newItem3)
 
         val total = shoppingDao.observeTotal().getOrAwaitValue()
-        assertThat(total).isEqualTo(10*100+20*100+30*100)
+        assertThat(total).isEqualTo(10 * 100 + 20 * 100 + 30 * 100)
 
     }
 
