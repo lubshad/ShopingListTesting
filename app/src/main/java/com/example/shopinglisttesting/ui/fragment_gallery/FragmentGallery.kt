@@ -83,7 +83,7 @@ class FragmentGallery : Fragment(R.layout.fragment_gallery), PixabayImageAdapter
     override fun onItemClicked(imageUrl: String) {
         val bundle = bundleOf(ITEM_IMAGE_URL to imageUrl)
         setFragmentResult(ITEM_IMAGE_URL, bundle)
-        findNavController().navigateUp()
+        findNavController().popBackStack()
     }
 }
 

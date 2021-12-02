@@ -6,15 +6,20 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.filters.MediumTest
 import com.example.shopinglisttesting.R
 import com.example.shopinglisttesting.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito
 import java.util.concurrent.TimeUnit
 
+
+@HiltAndroidTest
+@MediumTest
 class FragmentGalleryTest {
 
     @get:Rule
@@ -35,7 +40,7 @@ class FragmentGalleryTest {
             Navigation.setViewNavController(requireView(), navController)
         }
 
-        TimeUnit.MINUTES.sleep(5)
+        TimeUnit.SECONDS.sleep(15)
 
         Espresso.onView(ViewMatchers.withId(R.id.recycler_view_gallery)).perform(
             RecyclerViewActions.actionOnItemAtPosition<PixabayImageAdapter.PixabayImageViewHolder>(

@@ -13,6 +13,7 @@ buildscript {
         coroutinesVersion = "1.4.2"
         archVersion = "2.1.0"
         mockito_version = "3.11.1"
+        espresso_version= "3.3.0"
     }
 
     repositories {

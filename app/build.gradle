@@ -63,6 +63,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
+
+
     //Truth library
     testImplementation "com.google.truth:truth:1.1.3"
     testImplementation 'junit:junit:4.+'
@@ -73,10 +75,17 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'com.google.truth:truth:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.arch.core:core-testing:$archVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockito_version"
-    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.4.0')
+
+    //Dependencies for Espresso
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+
+// Espresso intents for checking launched intents
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
+
+// Espresso-contrib for DatePicker, RecyclerView, Drawer actions, Accessibility checks, CountingIdlingResource
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version")
 
     // For instrumentation tests
     androidTestImplementation  "com.google.dagger:hilt-android-testing:$dagger_hilt_version"
